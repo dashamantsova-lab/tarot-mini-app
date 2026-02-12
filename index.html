@@ -11,12 +11,22 @@
       --bg2:#0b0f2b;
       --text:#ffffff;
       --muted: rgba(255,255,255,.72);
-      --btn:#f2c44c;
-      --btnText:#151515;
+
       --shadow: 0 18px 40px rgba(0,0,0,.35);
       --radius: 18px;
-      --glow: 0 0 0 1px rgba(255,255,255,.10), 0 18px 38px rgba(0,0,0,.38), 0 0 26px rgba(242,196,76,.16);
-      --glowStrong: 0 0 0 1px rgba(255,255,255,.14), 0 22px 48px rgba(0,0,0,.44), 0 0 38px rgba(242,196,76,.28);
+
+      /* gold gradient like reference */
+      --gold1:#fff4b0;
+      --gold2:#f2c44c;
+      --gold3:#d59b1a;
+
+      --btnGlow: 0 0 0 1px rgba(255,255,255,.12),
+                 0 18px 40px rgba(0,0,0,.35),
+                 0 0 34px rgba(242,196,76,.38);
+
+      --btnGlowStrong: 0 0 0 1px rgba(255,255,255,.16),
+                       0 22px 52px rgba(0,0,0,.45),
+                       0 0 46px rgba(242,196,76,.52);
     }
 
     *{ box-sizing:border-box; }
@@ -25,6 +35,7 @@
       margin:0;
       padding:0;
       overflow:hidden;
+      background: #0b0f2b;
     }
 
     body{
@@ -62,69 +73,6 @@
       flex-direction: column;
     }
 
-    /* ===== Intro overlay ===== */
-    .introOverlay{
-      position:absolute;
-      inset:0;
-      z-index: 5;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 20px;
-      background:
-        radial-gradient(340px 340px at 50% 40%, rgba(255,255,255,.10), transparent 65%),
-        radial-gradient(520px 520px at 50% 65%, rgba(0,0,0,.30), transparent 70%),
-        linear-gradient(180deg, #3a1b8a, #0b0f2b);
-      opacity: 0;
-      pointer-events:none;
-      transition: opacity 450ms ease;
-      overflow:hidden;
-    }
-    .introOverlay.show{
-      opacity: 1;
-      pointer-events:auto;
-    }
-    .introText{
-      max-width: 360px;
-      text-align:center;
-      font-weight: 800;
-      font-size: 18px;
-      line-height: 1.35;
-      letter-spacing:.2px;
-      text-shadow: 0 18px 40px rgba(0,0,0,.35);
-    }
-    .introText small{
-      display:block;
-      margin-top: 10px;
-      font-weight: 600;
-      font-size: 13px;
-      color: rgba(255,255,255,.78);
-    }
-
-    .stars{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      opacity: .95;
-    }
-    .star{
-      position:absolute;
-      width: 3px;
-      height: 3px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.95);
-      box-shadow: 0 0 12px rgba(255,255,255,.45);
-      animation: twinkle var(--tw, 1800ms) ease-in-out infinite;
-    }
-    .star.big{
-      width: 5px; height: 5px;
-      box-shadow: 0 0 18px rgba(255,255,255,.55);
-    }
-    @keyframes twinkle{
-      0%, 100% { opacity: .15; transform: scale(.7); }
-      50%      { opacity: 1; transform: scale(1.2); }
-    }
-
     /* ===== Wheel screen ===== */
     .wheelWrap{
       height: 100%;
@@ -133,6 +81,7 @@
       align-items:center;
       justify-content:center;
       gap: 18px;
+      padding-bottom: 12px;
     }
 
     .wheel{
@@ -144,21 +93,26 @@
       border-radius: 999px;
       display:block;
       filter: drop-shadow(0 24px 40px rgba(0,0,0,.35));
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 450ms ease, transform 450ms ease;
-    }
-    .wheel.ready{
       opacity: 1;
       transform: translateY(0);
     }
 
     .hint{
       text-align:center;
-      color: rgba(255,255,255,.86);
-      font-size: 14px;
-      line-height: 1.35;
-      margin-top: 10px;
+      color: rgba(255,255,255,.92);
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+
+      /* ✅ опускаем ниже, чтобы не перекрывалось картами */
+      margin-top: 34px;
+
+      text-shadow: 0 12px 24px rgba(0,0,0,.35);
+      letter-spacing: .2px;
+
+      /* ✅ поверх карт, если вдруг пересекаются */
+      position: relative;
+      z-index: 5;
     }
 
     .tarotCard{
@@ -170,6 +124,7 @@
       user-select:none;
       transition: filter 200ms ease, opacity 200ms ease;
       will-change: transform;
+      transform-origin: 50% 50%;
     }
 
     .cardFace{
@@ -199,41 +154,43 @@
       pointer-events:none;
     }
 
-    /* ===== Picked screen ===== */
+    /* ===== Picked screen (ref spacing) ===== */
     .pickedWrap{
       height:100%;
       display:flex;
       flex-direction:column;
       align-items:center;
-      justify-content:center;
-      gap: 16px;
+      justify-content:flex-start;
+      padding-top: 74px; /* like reference */
+      gap: 22px;
     }
 
     .pill{
       width:100%;
-      background: rgba(0,0,0,.18);
+      background: rgba(0,0,0,.22);
       border: 1px solid rgba(255,255,255,.12);
       border-radius: 999px;
-      padding: 10px 14px;
+      padding: 12px 16px;
       text-align:center;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
     .pillSmall{
       font-size: 12px;
-      letter-spacing:.5px;
-      color: var(--muted);
+      letter-spacing:.7px;
+      color: rgba(255,255,255,.72);
       text-transform: uppercase;
       margin-bottom: 2px;
     }
     .pillBig{
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: .2px;
     }
 
     .pickedFlip{
-      width: 175px;
-      height: 268px;
+      width: 185px;
+      height: 282px;
       perspective: 1100px;
       filter: drop-shadow(0 28px 60px rgba(0,0,0,.42));
     }
@@ -244,7 +201,9 @@
       transform-style: preserve-3d;
       transition: transform 760ms cubic-bezier(.2,.9,.2,1);
       border-radius: 18px;
-      box-shadow: var(--glowStrong);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.14),
+                  0 22px 48px rgba(0,0,0,.44),
+                  0 0 44px rgba(242,196,76,.20);
     }
     .pickedFlip.revealed .pickedInner{
       transform: rotateY(180deg);
@@ -272,116 +231,141 @@
       display:block;
     }
 
-    .btnPrimary{
+    /* ===== Buttons (gold gradient + glow) ===== */
+    .btnPrimary,
+    .btnGold{
       width: 100%;
       border: none;
       border-radius: 999px;
-      padding: 14px 16px;
+      padding: 16px 18px;
       font-weight: 900;
       letter-spacing: 1.2px;
       text-transform: uppercase;
-      background: var(--btn);
-      color: var(--btnText);
-      box-shadow: 0 18px 40px rgba(242,196,76,.22), 0 10px 20px rgba(0,0,0,.28);
       cursor:pointer;
+      font-size: 16px;
+      color: #1b1b1b;
+      background: linear-gradient(180deg, var(--gold1), var(--gold2) 55%, var(--gold3));
+      box-shadow: var(--btnGlowStrong);
+      transition: transform 120ms ease, filter 120ms ease;
+    }
+    .btnPrimary:active,
+    .btnGold:active{
+      transform: translateY(1px) scale(.995);
+      filter: brightness(.98);
     }
 
-    /* ===== ТЕКСТОВЫЙ ЭКРАН ===== */
+    /* ===== Text screen (fit to content & centered) ===== */
     .textWrap{
       height:100%;
       display:flex;
       flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding-top: 18px;
       overflow: hidden;
     }
 
     .heading{
       flex-shrink: 0;
-      padding: 4px 2px 12px;
+      width: 100%;
+      text-align: center;
+      padding: 6px 2px 12px;
     }
     .headingSmall{
-      color: var(--muted);
+      color: rgba(255,255,255,.74);
       text-transform: uppercase;
-      letter-spacing: .6px;
+      letter-spacing: .7px;
       font-size: 12px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .headingBig{
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
       margin: 0;
+      letter-spacing: .2px;
     }
 
     .textPanel{
-      flex: 1;
-      min-height: 0;
+      width:100%;
       background: rgba(0,0,0,.18);
       border: 1px solid rgba(255,255,255,.12);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       padding: 16px;
-      overflow-y: auto;
       color: rgba(255,255,255,.92);
       line-height: 1.55;
       font-size: 15px;
+      white-space: pre-line;
+
+      /* IMPORTANT: fit to content (no empty space), still scroll if huge */
+      flex: 0 1 auto;
+      max-height: calc(100vh - 250px);
+      overflow-y: auto;
+
       scrollbar-width: thin;
       scrollbar-color: rgba(255,255,255,.25) transparent;
-      white-space: pre-line;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
     }
 
     .bottomBtns{
+      width: 100%;
+      margin-top: 16px;
       flex-shrink: 0;
       display:flex;
       flex-direction:column;
-      gap: 10px;
-      padding: 16px 0 4px;
-      background: linear-gradient(180deg, rgba(11,15,43,0) 0%, rgba(11,15,43,.9) 25%);
+      gap: 12px;
+      padding: 10px 0 4px;
+      background: linear-gradient(180deg, rgba(11,15,43,0) 0%, rgba(11,15,43,.85) 35%);
     }
 
-    .btnSecondary{
-      width:100%;
-      border-radius: 14px;
-      padding: 14px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.14);
-      color: rgba(255,255,255,.94);
-      font-weight: 800;
-      cursor:pointer;
-      box-shadow: var(--glow);
-    }
-
+    .btnSecondary,
     .btnGhost{
       width:100%;
-      border-radius: 14px;
-      padding: 14px;
-      background: rgba(0,0,0,.20);
-      border: 1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.90);
-      font-weight: 800;
+      border-radius: 999px;
+      padding: 16px 18px;
+      font-weight: 900;
       cursor:pointer;
-      box-shadow: var(--glow);
+      font-size: 16px;
+      letter-spacing: .3px;
+      box-shadow: var(--btnGlow);
+      transition: transform 120ms ease, filter 120ms ease;
+    }
+    .btnSecondary{
+      border: none;
+      color: #1b1b1b;
+      background: linear-gradient(180deg, var(--gold1), var(--gold2) 55%, var(--gold3));
+    }
+    .btnGhost{
+      border: none;
+      color: #1b1b1b;
+      background: linear-gradient(180deg, var(--gold1), var(--gold2) 55%, var(--gold3));
+    }
+    .btnSecondary:active,
+    .btnGhost:active{
+      transform: translateY(1px) scale(.995);
+      filter: brightness(.98);
     }
 
     @media (max-width: 360px){
       .wheel{ width: 285px; height: 285px; }
       .tarotCard{ width: 86px; height: 134px; }
-      .pickedFlip{ width: 160px; height: 246px; }
-      .textPanel { font-size: 14px; }
+      .pickedFlip{ width: 170px; height: 260px; }
+
+      /* ✅ тоже опускаем ниже на маленьких экранах */
+      .hint{ font-size: 18px; margin-top: 38px; }
+
+      .btnPrimary, .btnSecondary, .btnGhost{ font-size: 15px; padding: 15px 16px; }
+      .headingBig{ font-size: 22px; }
+      .textPanel { font-size: 14px; max-height: calc(100vh - 240px); }
+      .pickedWrap{ padding-top: 62px; }
     }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <div class="introOverlay show" id="intro">
-      <div class="stars" id="stars"></div>
-      <div class="introText">
-        Закройте глаза и сфокусируйтесь на вашем запросе…
-        <small>Сейчас появятся карты</small>
-      </div>
-    </div>
 
     <section class="screen active" id="screenWheel">
       <div class="wheelWrap">
@@ -431,20 +415,15 @@
     // ====== НАСТРОЙКИ ======
     const BACK_IMAGE = "assets/back.jpg";
 
-    // защита от раннего открытия (когда нажимают “Открыть приложение” в профиле бота)
     // если true — миниап работает только если есть ?from=bot
     const REQUIRE_FROM_BOT_PARAM = true;
 
-    // 1 расклад в день — по локальному хранилищу и user.id (быстрое решение)
+    // 1 расклад в день — по локальному хранилищу и user.id
     const TIMEZONE = "Europe/Bucharest";
 
     // ====== ДАННЫЕ КАРТ (10 шт) ======
     const TAROT = [
-      {
-        id: 1,
-        name: "I МАГ",
-        sphere: "Карта дня",
-        image: "assets/mag.jpg",
+      { id: 1, name: "I МАГ", sphere: "Карта дня", image: "assets/mag.jpg",
         long:
 `День личной силы и инициативы. Вы главный режиссер, и сегодня у вас есть все инструменты, чтобы воплотить идеи в реальность.
 
@@ -454,13 +433,8 @@
 💠 Воля. Не ждите знаков, создавайте события сами.
 
 Совет: Переходите от слов к делу. У вас достаточно ресурсов для рывка.
-Психологический фокус: Отследите сегодня моменты, когда вы сомневаетесь в своей компетенции. Скажите себе: «Я имею право проявляться и заявлять о своих желаниях». Сделайте одно маленькое действие, которое давно откладывали из-за неуверенности.`
-      },
-      {
-        id: 2,
-        name: "VIII СИЛА",
-        sphere: "Карта дня",
-        image: "assets/strength.jpg",
+Психологический фокус: Отследите сегодня моменты, когда вы сомневаетесь в своей компетенции. Скажите себе: «Я имею право проявляться и заявлять о своих желаниях». Сделайте одно маленькое действие, которое давно откладывали из-за неуверенности.` },
+      { id: 2, name: "VIII СИЛА", sphere: "Карта дня", image: "assets/strength.jpg",
         long:
 `День внутренней стойкости и мягкого управления. Победа сегодня достигается выдержкой и любовью к своему «внутреннему зверю», не стоит проявлять агрессию.
 
@@ -470,13 +444,8 @@
 💠 Страсть. День ярких чувств и уверенности в своей привлекательности.
 
 Совет: Будьте гибкими. Мягкая сила сегодня эффективнее открытого конфликта.
-Психологический фокус: Понаблюдайте за своим «внутренним зверем» (агрессией или страстью). Не подавляйте его, а дайте ему место. Спросите себя: «О чем говорит мне эта эмоция?» Направьте эту энергию в созидание или спорт.`
-      },
-      {
-        id: 3,
-        name: "XXI МИР",
-        sphere: "Карта дня",
-        image: "assets/world.jpg",
+Психологический фокус: Понаблюдайте за своим «внутренним зверем» (агрессией или страстью). Не подавляйте его, а дайте ему место. Спросите себя: «О чем говорит мне эта эмоция?» Направьте эту энергию в созидание или спорт.` },
+      { id: 3, name: "XXI МИР", sphere: "Карта дня", image: "assets/world.jpg",
         long:
 `День гармонии, триумфа и расширения границ. Круг замкнулся: вы приходите к важному результату и чувствуете единство с миром.
 
@@ -486,13 +455,8 @@
 💠 Целостность. Состояние, когда всё на своих местах.
 
 Совет: Наслаждайтесь моментом «здесь и сейчас». Вы там, где и должны быть.
-Психологический фокус: Практика расширения границ. Позвольте себе выйти за рамки привычного сценария. Ощутите свою целостность: вы не только ваши ошибки или достижения, вы — целая Вселенная, в которой есть место всему.`
-      },
-      {
-        id: 4,
-        name: "8 КУБКОВ",
-        sphere: "Карта дня",
-        image: "assets/8cups.jpg",
+Психологический фокус: Практика расширения границ. Позвольте себе выйти за рамки привычного сценария. Ощутите свою целостность: вы не только ваши ошибки или достижения, вы — целая Вселенная, в которой есть место всему.` },
+      { id: 4, name: "8 КУБКОВ", sphere: "Карта дня", image: "assets/8cups.jpg",
         long:
 `День осознанного ухода и поиска новых смыслов. Старое больше не радует, и вы решаетесь оставить «полные чаши» ради чего-то более глубокого.
 
@@ -502,13 +466,8 @@
 💠 Переход. Состояние «между прошлым и будущим».
 
 Совет: Не бойтесь оставлять привычное. Впереди ваш истинный путь.
-Психологический фокус: Проанализируйте, что вы продолжаете делать «по привычке», хотя это давно не приносит радости. Признать, что этап завершен вовсе это не поражение, это освобождение места для нового «Я».`
-      },
-      {
-        id: 5,
-        name: "10 КУБКОВ",
-        sphere: "Карта дня",
-        image: "assets/10cups.jpg",
+Психологический фокус: Проанализируйте, что вы продолжаете делать «по привычке», хотя это давно не приносит радости. Признать, что этап завершен вовсе это не поражение, это освобождение места для нового «Я».` },
+      { id: 5, name: "10 КУБКОВ", sphere: "Карта дня", image: "assets/10cups.jpg",
         long:
 `День эмоционального изобилия и семейного счастья. Карта гармонии в отношениях и ощущения, что «жизнь удалась».
 
@@ -518,13 +477,8 @@
 💠 Финал. Счастливое разрешение давней ситуации.
 
 Совет: Берегите свое счастье и делитесь теплом с теми, кто вам дорог.
-Психологический фокус: Практика благодарности. Психике важно замечать безопасные и теплые зоны. Найдите 3 повода сказать «спасибо» близким или самой жизни. Это укрепит вашу внутреннюю опору.`
-      },
-      {
-        id: 6,
-        name: "ТУЗ ПЕНТАКЛЕЙ",
-        sphere: "Карта дня",
-        image: "assets/ace_pentacles.jpg",
+Психологический фокус: Практика благодарности. Психике важно замечать безопасные и теплые зоны. Найдите 3 повода сказать «спасибо» близким или самой жизни. Это укрепит вашу внутреннюю опору.` },
+      { id: 6, name: "ТУЗ ПЕНТАКЛЕЙ", sphere: "Карта дня", image: "assets/ace_pentacles.jpg",
         long:
 `День материальных возможностей и удачных шансов. Божественный дар в виде ресурса, денег или физического здоровья.
 
@@ -534,13 +488,8 @@
 💠 Реальность. Ощутимые результаты ваших трудов.
 
 Совет: Ловите возможность. Сегодня мир протягивает вам «золотую монету».
-Психологический фокус: Разрешите себе обладать желаемым. Часто мы бессознательно отталкиваем удачу, считая, что «не заслужили». Скажите сегодня: «Я принимаю этот ресурс, он мой по праву».`
-      },
-      {
-        id: 7,
-        name: "3 ПЕНТАКЛЕЙ",
-        sphere: "Карта дня",
-        image: "assets/3pentacles.jpg",
+Психологический фокус: Разрешите себе обладать желаемым. Часто мы бессознательно отталкиваем удачу, считая, что «не заслужили». Скажите сегодня: «Я принимаю этот ресурс, он мой по праву».` },
+      { id: 7, name: "3 ПЕНТАКЛЕЙ", sphere: "Карта дня", image: "assets/3pentacles.jpg",
         long:
 `День профессионализма и командной работы. Мастерство признается другими, сотрудничество приносит плоды.
 
@@ -550,13 +499,8 @@
 💠 Конструктив. Планомерное движение к цели через труд.
 
 Совет: Проявите себя как эксперт. Ваши старания будут замечены и оценены.
-Психологический фокус: Работа с самоценностью. Посмотрите на результаты своего труда глазами стороннего наблюдателя. Не обесценивайте свой вклад.`
-      },
-      {
-        id: 8,
-        name: "ТУЗ МЕЧЕЙ",
-        sphere: "Карта дня",
-        image: "assets/ace_swords.jpg",
+Психологический фокус: Работа с самоценностью. Посмотрите на результаты своего труда глазами стороннего наблюдателя. Не обесценивайте свой вклад.` },
+      { id: 8, name: "ТУЗ МЕЧЕЙ", sphere: "Карта дня", image: "assets/ace_swords.jpg",
         long:
 `День ясности, логики и волевых решений. Туман рассеивается, и вы видите ситуацию такой, какая она есть на самом деле.
 
@@ -566,13 +510,8 @@
 💠 Радикальность. Готовность отсечь лишнее.
 
 Совет: Действуйте хладнокровно. Трезвый расчет сегодня важнее эмоций.
-Психологический фокус: День ментальной гигиены. Отсеките лишний информационный шум и чужие мнения. Спросите себя: «Что из этого факты, а что мои фантазии и страхи?» Выбирайте ясность.`
-      },
-      {
-        id: 9,
-        name: "ПАЖ ЖЕЗЛОВ",
-        sphere: "Карта дня",
-        image: "assets/page_wands.jpg",
+Психологический фокус: День ментальной гигиены. Отсеките лишний информационный шум и чужие мнения. Спросите себя: «Что из этого факты, а что мои фантазии и страхи?» Выбирайте ясность.` },
+      { id: 9, name: "ПАЖ ЖЕЗЛОВ", sphere: "Карта дня", image: "assets/page_wands.jpg",
         long:
 `День новостей, энтузиазма и свежих идей. Молодая, дерзкая энергия, жаждущая проявленности.
 
@@ -582,13 +521,8 @@
 💠 Шанс. Маленький, но многообещающий старт.
 
 Совет: Будьте открыты приключениям. Даже если нет опыта, пробуйте!
-Психологический фокус: Включите «внутреннего ребенка». Позвольте себе быть неидеальной, ошибаться и искренне чем-то увлечься. Любопытство сегодня ваш главный двигатель и антидот от выгорания.`
-      },
-      {
-        id: 10,
-        name: "4 МЕЧЕЙ",
-        sphere: "Карта дня",
-        image: "assets/4swords.jpg",
+Психологический фокус: Включите «внутреннего ребенка». Позвольте себе быть неидеальной, ошибаться и искренне чем-то увлечься. Любопытство сегодня ваш главный двигатель и антидот от выгорания.` },
+      { id: 10, name: "4 МЕЧЕЙ", sphere: "Карта дня", image: "assets/4swords.jpg",
         long:
 `День паузы, восстановления и внутреннего покоя. Время «лечь на дно», чтобы набраться сил перед новым рывком.
 
@@ -598,12 +532,18 @@
 💠 Оздоровление. Тело просит сна и тишины.
 
 Совет: Дайте себе право на бездействие. Мир не рухнет, пока вы отдыхаете.
-Психологический фокус: Практика тишины. Побудьте хотя бы 15 минут без гаджетов и задач. Ваша психика нуждается в этой паузе, чтобы переварить накопленный опыт.`
-      }
+Психологический фокус: Практика тишины. Побудьте хотя бы 15 минут без гаджетов и задач. Ваша психика нуждается в этой паузе, чтобы переварить накопленный опыт.` }
     ];
 
     // ====== STATE / HELPERS ======
-    const state = { locked:false, picked:null, cardNodes:[], count:10 };
+    const state = {
+      locked:false,
+      picked:null,
+      cardNodes:[],
+      count:10,
+      isExpanded:false,
+      targets:[]
+    };
     const $ = (id) => document.getElementById(id);
 
     function showScreen(which){
@@ -617,7 +557,7 @@
     }
 
     function setPickedUI(card){
-      $("pillSphere").textContent = `КАРТА ДНЯ`;
+      $("pillSphere").textContent = `СФЕРА: КАРТА ДНЯ`;
       $("pillName").textContent = card.name;
 
       $("textSphere").textContent = `КАРТА ДНЯ`;
@@ -636,19 +576,38 @@
       setTimeout(() => flip.classList.add("revealed"), 260);
     }
 
-    function buildStars(){
-      const wrap = $("stars");
-      wrap.innerHTML = "";
-      const count = 34;
-      for(let i=0;i<count;i++){
-        const s = document.createElement("div");
-        s.className = "star" + (Math.random() > 0.82 ? " big" : "");
-        s.style.left = (Math.random()*100).toFixed(2) + "%";
-        s.style.top  = (Math.random()*100).toFixed(2) + "%";
-        s.style.setProperty("--tw", (1200 + Math.random()*2200).toFixed(0) + "ms");
-        s.style.animationDelay = (Math.random()*1200).toFixed(0) + "ms";
-        wrap.appendChild(s);
+    // ====== GEOMETRY (circle positions) ======
+    // ✅ FIX: радиус считаем по ширине карты и количеству карт, чтобы они касались краями, а не перекрывались
+    function computeTargets(size){
+      const cardW = (window.innerWidth <= 360) ? 86 : 92;
+      const cardH = (window.innerWidth <= 360) ? 134 : 142;
+
+      const center = size / 2;
+      const startAngle = -90;
+
+      // Длина дуги между соседними центрами (чуть меньше ширины карты => лёгкое касание)
+      const desiredArc = cardW * 0.95;
+
+      // r = (arc * N) / (2π)
+      let radius = (desiredArc * state.count) / (2 * Math.PI);
+
+      // Ограничения, чтобы красиво на разных экранах (не слипаться и не вылезать)
+      const minR = size * 0.28;
+      const maxR = size * 0.44;
+      radius = Math.max(minR, Math.min(maxR, radius));
+
+      const targets = [];
+      for(let i=0;i<state.count;i++){
+        const angle = startAngle + (360 / state.count) * i;
+        const rad = angle * Math.PI/180;
+
+        const x = center + radius * Math.cos(rad) - cardW/2;
+        const y = center + radius * Math.sin(rad) - cardH/2;
+
+        // ✅ ВАЖНО: поворот как на референсе (верхняя карта вертикально)
+        targets.push({ x, y, rot: angle + 90 });
       }
+      return targets;
     }
 
     function makeWheel(){
@@ -658,22 +617,31 @@
 
       const rect = wheel.getBoundingClientRect();
       const size = Math.min(rect.width || 320, rect.height || 320);
-      const center = size / 2;
-      const radius = size * 0.36;
-      const startAngle = -90;
+      state.targets = computeTargets(size);
+
+      const cardW = (window.innerWidth <= 360) ? 86 : 92;
+      const cardH = (window.innerWidth <= 360) ? 134 : 142;
+
+      // stack position in the CENTER
+      const stackLeft = (size/2) - (cardW/2);
+      const stackTop  = (size/2) - (cardH/2) + 6;
 
       for(let i=0;i<state.count;i++){
-        const angle = startAngle + (360 / state.count) * i;
-        const cardW = (window.innerWidth <= 360) ? 86 : 92;
-        const cardH = (window.innerWidth <= 360) ? 134 : 142;
-
-        const x = center + radius * Math.cos(angle * Math.PI/180) - cardW/2;
-        const y = center + radius * Math.sin(angle * Math.PI/180) - cardH/2;
-
         const el = document.createElement("div");
         el.className = "tarotCard";
-        el.style.left = `${x}px`;
-        el.style.top  = `${y}px`;
+
+        // финальная позиция на окружности
+        el.style.left = `${state.targets[i].x}px`;
+        el.style.top  = `${state.targets[i].y}px`;
+
+        // стартовое положение: вся колода в центре
+        const dx = stackLeft - state.targets[i].x;
+        const dy = stackTop  - state.targets[i].y;
+
+        // небольшой естественный разброс в стопке допустим
+        const stackRot = (Math.random()*10 - 5).toFixed(2);
+        el.style.transform = `translate(${dx}px, ${dy}px) rotate(${stackRot}deg) scale(.98)`;
+        el.style.opacity = "1";
 
         const face = document.createElement("div");
         face.className = "cardFace";
@@ -681,59 +649,76 @@
 
         el.appendChild(face);
         el.addEventListener("click", () => onCardClick(el));
-
         wheel.appendChild(el);
         state.cardNodes.push(el);
       }
+
+      state.isExpanded = false;
     }
 
-    async function animateShuffleToStack(){
-      const wheel = $("wheel");
-      const wheelRect = wheel.getBoundingClientRect();
-      const stackX = wheelRect.left + wheelRect.width/2;
-      const stackY = wheelRect.top  + wheelRect.height/2 + 6;
-      const orbitR = Math.min(wheelRect.width, wheelRect.height) * 0.33;
-
-      const steps = 15;
-      const baseDur = 1180;
-      const stackDur = 620;
+    // ✅ Раскрываем в идеальный круг: rotate строго по рассчитанному углу
+    function animateStackToCircle(){
+      if(state.isExpanded) return Promise.resolve();
       const ease = "cubic-bezier(.16,.84,.25,1)";
+      const dur = 820;
 
-      const animations = state.cardNodes.map((el, idx) => {
-        const r = el.getBoundingClientRect();
-        const curX = r.left;
-        const curY = r.top;
-        const phase = (Math.PI * 2 / state.count) * idx;
+      const anims = state.cardNodes.map((el, i) => {
+        const targetRot = state.targets[i]?.rot ?? 0;
+        const end = `translate(0px, 0px) rotate(${targetRot}deg) scale(1)`;
 
-        const keyframes = [];
-        for(let s=0; s<steps; s++){
-          const t = s/(steps-1);
-          const ang = phase + t * (Math.PI*2) * 1.02;
-          const targetX = stackX + orbitR * Math.cos(ang) - r.width/2;
-          const targetY = stackY + orbitR * Math.sin(ang) - r.height/2;
-          const tx = targetX - curX;
-          const ty = targetY - curY;
-          const rot = (t*320) + (idx*6);
-          keyframes.push({ transform: `translate(${tx}px, ${ty}px) rotate(${rot}deg)`, offset: t });
-        }
+        return el.animate(
+          [
+            { transform: el.style.transform, offset: 0 },
+            { transform: end, offset: 1 }
+          ],
+          { duration: dur, easing: ease, fill: "forwards" }
+        ).finished.then(() => { el.style.transform = end; });
+      });
 
-        const targetStackX = stackX - r.width/2 + (Math.random()*8 - 4);
-        const targetStackY = stackY - r.height/2 + (Math.random()*8 - 4);
-        const stx = targetStackX - curX;
-        const sty = targetStackY - curY;
+      state.isExpanded = true;
+      return Promise.all(anims);
+    }
 
-        const anim = el.animate(keyframes, { duration: baseDur, easing: ease, fill: "forwards" });
-        return anim.finished.then(() => {
-          return el.animate(
-            [
-              { transform: keyframes[keyframes.length-1].transform },
-              { transform: `translate(${stx}px, ${sty}px) rotate(${Math.random()*8 - 4}deg)` }
-            ],
-            { duration: stackDur, easing: ease, fill: "forwards" }
-          ).finished;
+    function animateCircleToStack(clickedEl){
+      const wheel = $("wheel");
+      const rect = wheel.getBoundingClientRect();
+      const size = Math.min(rect.width || 320, rect.height || 320);
+
+      const cardW = (window.innerWidth <= 360) ? 86 : 92;
+      const cardH = (window.innerWidth <= 360) ? 134 : 142;
+
+      const stackLeft = (size/2) - (cardW/2);
+      const stackTop  = (size/2) - (cardH/2) + 6;
+
+      const ease = "cubic-bezier(.16,.84,.25,1)";
+      const dur = 720;
+
+      const anims = state.cardNodes.map((el, i) => {
+        const isClicked = (el === clickedEl);
+
+        const dx = stackLeft - state.targets[i].x;
+        const dy = stackTop  - state.targets[i].y;
+
+        el.style.zIndex = isClicked ? 3 : 1;
+
+        const endRot = isClicked ? 0 : (Math.random()*10 - 5);
+        const endOpacity = isClicked ? "1" : ".55";
+        const end = `translate(${dx}px, ${dy}px) rotate(${endRot.toFixed(2)}deg) scale(.98)`;
+
+        return el.animate(
+          [
+            { transform: el.style.transform || "translate(0px,0px)", opacity: "1", offset: 0 },
+            { transform: end, opacity: endOpacity, offset: 1 }
+          ],
+          { duration: dur, easing: ease, fill: "forwards" }
+        ).finished.then(() => {
+          el.style.transform = end;
+          el.style.opacity = endOpacity;
         });
       });
-      return Promise.all(animations);
+
+      state.isExpanded = false;
+      return Promise.all(anims);
     }
 
     // ====== 1 РАСКЛАД В ДЕНЬ ======
@@ -767,7 +752,7 @@
       $("textSphere").textContent = "КАРТА ДНЯ";
       $("textName").textContent = textTitle;
       $("textPanel").textContent = textBody;
-      $("btnSend").style.display = "none"; // отправлять нечего
+      $("btnSend").style.display = "none";
       $("btnFull").textContent = "Хочу полный расклад!";
       $("textPanel").scrollTop = 0;
     }
@@ -797,18 +782,33 @@
       }
 
       if(state.locked) return;
-      state.locked = true;
 
+      // 1) если круг ещё не раскрыт — раскрываем и НЕ выбираем карту
+      if(!state.isExpanded){
+        state.locked = true;
+        await animateStackToCircle();
+        state.locked = false;
+        return;
+      }
+
+      // 2) если круг раскрыт — выбираем карту
+      state.locked = true;
       state.picked = randomPick();
       setDrawToday();
 
-      await animateShuffleToStack();
+      await animateCircleToStack(clickedEl);
+
+      // затухаем остальные
       state.cardNodes.forEach(el => {
         if(el !== clickedEl) el.classList.add("pickedOut");
       });
 
-      showScreen("screenPicked");
-      setPickedUI(state.picked);
+      // небольшая пауза, чтобы колода "успела"
+      setTimeout(() => {
+        showScreen("screenPicked");
+        setPickedUI(state.picked);
+        state.locked = false;
+      }, 180);
     }
 
     // ====== ОТПРАВКА В БОТ ======
@@ -831,7 +831,6 @@
         return;
       }
 
-      // запасной вариант (если откроют не как WebApp)
       navigator.clipboard?.writeText(state.picked.long)
         .then(() => alert("Текст скопирован. Можно вставить в чат 🙂"))
         .catch(() => alert("Не удалось скопировать."));
@@ -846,11 +845,28 @@
       alert("Открой миниап через кнопку в боте, чтобы перейти к полному раскладу.");
     }
 
+    // ====== FULLSCREEN / EXPAND ======
+    function tryExpandFullscreen(){
+      try{
+        if(window.Telegram && window.Telegram.WebApp){
+          window.Telegram.WebApp.ready();
+          window.Telegram.WebApp.expand();
+        }
+      }catch(e){}
+
+      // Optional: browser fullscreen (works outside Telegram / some Android)
+      try{
+        const el = document.documentElement;
+        const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+        if(req) req.call(el);
+      }catch(e){}
+    }
+
     // ====== EVENTS ======
     $("btnDecode").addEventListener("click", () => {
       if(!state.picked) return;
       showScreen("screenText");
-      $("btnSend").style.display = ""; // показываем обратно
+      $("btnSend").style.display = "";
       $("btnSend").textContent = "Отправить в чат";
       $("btnFull").textContent = "Хочу полный расклад!";
       $("textPanel").scrollTop = 0;
@@ -859,30 +875,20 @@
     $("btnSend").addEventListener("click", sendToChat);
     $("btnFull").addEventListener("click", goFull);
 
-    try{
-      if(window.Telegram && window.Telegram.WebApp){
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand();
-      }
-    }catch(e){}
-
-    buildStars();
-
-    window.addEventListener("load", () => {
-      const intro = $("intro");
-      const wheel = $("wheel");
-
+    window.addEventListener("load", async () => {
+      tryExpandFullscreen();
       makeWheel();
 
-      setTimeout(() => {
-        intro.classList.remove("show");
-        setTimeout(() => wheel.classList.add("ready"), 120);
-      }, 2600);
+      // стартовая анимация: из колоды раскрыть в круг
+      await new Promise(r => setTimeout(r, 120));
+      await animateStackToCircle();
     });
 
     window.addEventListener("resize", () => {
       if(state.locked) return;
       makeWheel();
+      // аккуратно вернуть круг раскрытым после resize
+      animateStackToCircle();
     });
   </script>
 </body>
