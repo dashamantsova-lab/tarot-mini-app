@@ -659,8 +659,8 @@
     // ✅ Раскрываем в идеальный круг: rotate строго по рассчитанному углу
     function animateStackToCircle(){
       if(state.isExpanded) return Promise.resolve();
-      const ease = "cubic-bezier(.16,.84,.25,1)";
-      const dur = 820;
+      const ease = "cubic-bezier(.2,.8,.2,1)";
+      const dur = 1300;
 
       const anims = state.cardNodes.map((el, i) => {
         const targetRot = state.targets[i]?.rot ?? 0;
@@ -690,8 +690,8 @@
       const stackLeft = (size/2) - (cardW/2);
       const stackTop  = (size/2) - (cardH/2) + 6;
 
-      const ease = "cubic-bezier(.16,.84,.25,1)";
-      const dur = 720;
+      const ease = "cubic-bezier(.2,.8,.2,1)";
+      const dur = 1100;
 
       const anims = state.cardNodes.map((el, i) => {
         const isClicked = (el === clickedEl);
