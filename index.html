@@ -348,6 +348,128 @@
       filter: brightness(.98);
     }
 
+    /* ====== MODAL: "Полный расклад" ====== */
+    .modalOverlay{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+      background: rgba(0,0,0,.60);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .modalOverlay.isOpen{ display:flex; }
+
+    .modalCard{
+      width: min(560px, 100%);
+      max-height: 86vh;
+      overflow: auto;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 16px 14px 14px;
+      color: rgba(255,255,255,.92);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .modalTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .modalTitle{
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .2px;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .modalClose{
+      border: 0;
+      background: rgba(255,255,255,.10);
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      cursor: pointer;
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10);
+    }
+    .modalClose:active{ transform: translateY(1px); }
+
+    .modalText{
+      margin: 0 0 10px;
+      line-height: 1.55;
+      opacity: .95;
+      white-space: pre-line;
+    }
+
+    .modalBlock{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .modalEmojiTitle{
+      margin: 0 0 6px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .modalList{
+      margin: 8px 0 0 18px;
+      padding: 0;
+      line-height: 1.55;
+      opacity: .95;
+    }
+
+    .modalPrice{
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(242,196,76,.12);
+      border: 1px solid rgba(242,196,76,.22);
+    }
+
+    .modalFooter{
+      margin-top: 12px;
+      position: sticky;
+      bottom: 0;
+      padding-top: 10px;
+      background: linear-gradient(to top, rgba(11,15,43,.92), rgba(11,15,43,0));
+    }
+
+    .payBtn{
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 18px;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 16px;
+      color: #1b1b1b;
+      background: linear-gradient(180deg, var(--gold1), var(--gold2) 55%, var(--gold3));
+      box-shadow: var(--btnGlowStrong);
+      transition: transform 120ms ease, filter 120ms ease;
+    }
+    .payBtn:active{
+      transform: translateY(1px) scale(.995);
+      filter: brightness(.98);
+    }
+
     @media (max-width: 360px){
       .wheel{ width: 285px; height: 285px; }
       .tarotCard{ width: 86px; height: 134px; }
@@ -360,6 +482,9 @@
       .headingBig{ font-size: 22px; }
       .textPanel { font-size: 14px; max-height: calc(100vh - 240px); }
       .pickedWrap{ padding-top: 62px; }
+
+      .modalTitle{ font-size: 17px; }
+      .payBtn{ font-size: 15px; padding: 15px 16px; }
     }
   </style>
 </head>
@@ -409,6 +534,51 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- ====== MODAL HTML: "Полный расклад" ====== -->
+  <div id="fullReadingModal" class="modalOverlay" aria-hidden="true">
+    <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="fullReadingTitle">
+      <div class="modalTop">
+        <h3 class="modalTitle" id="fullReadingTitle">Индивидуальный разбор</h3>
+        <button class="modalClose" id="fullReadingClose" aria-label="Закрыть">✕</button>
+      </div>
+
+      <p class="modalText">В индивидуальном разборе мы идем в самую глубь. Ты можешь выбрать любую сферу:</p>
+
+      <div class="modalBlock">
+        <p class="modalEmojiTitle">💙 Отношения</p>
+        <p class="modalText">Поймем, что на самом деле чувствует партнер, почему повторяются одни и те же сценарии и что нужно сделать, чтобы прийти к гармоничным отношениям</p>
+      </div>
+
+      <div class="modalBlock">
+        <p class="modalEmojiTitle">💰 Финансы</p>
+        <p class="modalText">Увидим, какие блоки мешают росту, где скрыт твой денежный ресурс и какие действия принесут результат уже в ближайшее время</p>
+      </div>
+
+      <div class="modalBlock">
+        <p class="modalEmojiTitle">💎 Реализация</p>
+        <p class="modalText">Разберем твой потенциал, найдем дело по душе и поймем, в каком направлении тебе сейчас стоит двигаться</p>
+      </div>
+
+      <div class="modalBlock">
+        <p class="modalText"><b>Что ты получишь:</b></p>
+        <ul class="modalList">
+          <li>анализ твоей ситуации</li>
+          <li>ответ на конкретный запрос и четкий прогноз</li>
+          <li>рекомендации как скорректировать события в твою пользу.</li>
+        </ul>
+      </div>
+
+      <div class="modalPrice">
+        <p class="modalText">Стоимость индивидуального разбора только 3 дня — <b>2 500 руб.</b> вместо <s>3 000 руб.</s></p>
+        <p class="modalText">После оплаты я свяжусь с тобой для уточнения деталей твоего запроса</p>
+      </div>
+
+      <div class="modalFooter">
+        <button class="payBtn" id="payBtn">Оплатить</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -577,7 +747,6 @@
     }
 
     // ====== GEOMETRY (circle positions) ======
-    // ✅ FIX: радиус считаем по ширине карты и количеству карт, чтобы они касались краями, а не перекрывались
     function computeTargets(size){
       const cardW = (window.innerWidth <= 360) ? 86 : 92;
       const cardH = (window.innerWidth <= 360) ? 134 : 142;
@@ -585,13 +754,9 @@
       const center = size / 2;
       const startAngle = -90;
 
-      // Длина дуги между соседними центрами (чуть меньше ширины карты => лёгкое касание)
       const desiredArc = cardW * 0.95;
-
-      // r = (arc * N) / (2π)
       let radius = (desiredArc * state.count) / (2 * Math.PI);
 
-      // Ограничения, чтобы красиво на разных экранах (не слипаться и не вылезать)
       const minR = size * 0.28;
       const maxR = size * 0.44;
       radius = Math.max(minR, Math.min(maxR, radius));
@@ -604,7 +769,6 @@
         const x = center + radius * Math.cos(rad) - cardW/2;
         const y = center + radius * Math.sin(rad) - cardH/2;
 
-        // ✅ ВАЖНО: поворот как на референсе (верхняя карта вертикально)
         targets.push({ x, y, rot: angle + 90 });
       }
       return targets;
@@ -622,7 +786,6 @@
       const cardW = (window.innerWidth <= 360) ? 86 : 92;
       const cardH = (window.innerWidth <= 360) ? 134 : 142;
 
-      // stack position in the CENTER
       const stackLeft = (size/2) - (cardW/2);
       const stackTop  = (size/2) - (cardH/2) + 6;
 
@@ -630,15 +793,12 @@
         const el = document.createElement("div");
         el.className = "tarotCard";
 
-        // финальная позиция на окружности
         el.style.left = `${state.targets[i].x}px`;
         el.style.top  = `${state.targets[i].y}px`;
 
-        // стартовое положение: вся колода в центре
         const dx = stackLeft - state.targets[i].x;
         const dy = stackTop  - state.targets[i].y;
 
-        // небольшой естественный разброс в стопке допустим
         const stackRot = (Math.random()*10 - 5).toFixed(2);
         el.style.transform = `translate(${dx}px, ${dy}px) rotate(${stackRot}deg) scale(.98)`;
         el.style.opacity = "1";
@@ -656,7 +816,6 @@
       state.isExpanded = false;
     }
 
-    // ✅ Раскрываем в идеальный круг: rotate строго по рассчитанному углу
     function animateStackToCircle(){
       if(state.isExpanded) return Promise.resolve();
       const ease = "cubic-bezier(.2,.8,.2,1)";
@@ -763,7 +922,6 @@
     }
 
     async function onCardClick(clickedEl){
-      // защита от раннего входа
       if(REQUIRE_FROM_BOT_PARAM && !isFromBot()){
         showGateOrLimit(
           "Доступ после подписки",
@@ -772,7 +930,6 @@
         return;
       }
 
-      // лимит 1/день
       if(!canDrawToday()){
         showGateOrLimit(
           "Ты уже получала карту сегодня ✨",
@@ -783,7 +940,6 @@
 
       if(state.locked) return;
 
-      // 1) если круг ещё не раскрыт — раскрываем и НЕ выбираем карту
       if(!state.isExpanded){
         state.locked = true;
         await animateStackToCircle();
@@ -791,19 +947,16 @@
         return;
       }
 
-      // 2) если круг раскрыт — выбираем карту
       state.locked = true;
       state.picked = randomPick();
       setDrawToday();
 
       await animateCircleToStack(clickedEl);
 
-      // затухаем остальные
       state.cardNodes.forEach(el => {
         if(el !== clickedEl) el.classList.add("pickedOut");
       });
 
-      // небольшая пауза, чтобы колода "успела"
       setTimeout(() => {
         showScreen("screenPicked");
         setPickedUI(state.picked);
@@ -836,13 +989,29 @@
         .catch(() => alert("Не удалось скопировать."));
     }
 
-    function goFull(){
-      if(window.Telegram && window.Telegram.WebApp && typeof window.Telegram.WebApp.sendData === "function"){
-        window.Telegram.WebApp.sendData(JSON.stringify({ type: "full_reading" }));
-        try{ window.Telegram.WebApp.close(); }catch(e){}
-        return;
-      }
-      alert("Открой миниап через кнопку в боте, чтобы перейти к полному раскладу.");
+    // ====== MODAL LOGIC: "Полный расклад" ======
+    const PAY_URL = "https://payform.ru/rlaHraE/";
+
+    function openFullModal(){
+      const modal = $("fullReadingModal");
+      modal.classList.add("isOpen");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeFullModal(){
+      const modal = $("fullReadingModal");
+      modal.classList.remove("isOpen");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function openPayLink(){
+      try{
+        if(window.Telegram && window.Telegram.WebApp && typeof window.Telegram.WebApp.openLink === "function"){
+          window.Telegram.WebApp.openLink(PAY_URL);
+          return;
+        }
+      }catch(e){}
+      window.open(PAY_URL, "_blank", "noopener,noreferrer");
     }
 
     // ====== FULLSCREEN / EXPAND ======
@@ -854,7 +1023,6 @@
         }
       }catch(e){}
 
-      // Optional: browser fullscreen (works outside Telegram / some Android)
       try{
         const el = document.documentElement;
         const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
@@ -873,13 +1041,29 @@
     });
 
     $("btnSend").addEventListener("click", sendToChat);
-    $("btnFull").addEventListener("click", goFull);
+
+    // ✅ теперь btnFull открывает модалку
+    $("btnFull").addEventListener("click", openFullModal);
+
+    // modal close handlers
+    $("fullReadingClose").addEventListener("click", closeFullModal);
+    $("fullReadingModal").addEventListener("click", (e) => {
+      if(e.target && e.target.id === "fullReadingModal") closeFullModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        const modal = $("fullReadingModal");
+        if(modal.classList.contains("isOpen")) closeFullModal();
+      }
+    });
+
+    // pay button handler
+    $("payBtn").addEventListener("click", openPayLink);
 
     window.addEventListener("load", async () => {
       tryExpandFullscreen();
       makeWheel();
 
-      // стартовая анимация: из колоды раскрыть в круг
       await new Promise(r => setTimeout(r, 120));
       await animateStackToCircle();
     });
@@ -887,7 +1071,6 @@
     window.addEventListener("resize", () => {
       if(state.locked) return;
       makeWheel();
-      // аккуратно вернуть круг раскрытым после resize
       animateStackToCircle();
     });
   </script>
